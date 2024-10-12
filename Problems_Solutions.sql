@@ -31,10 +31,14 @@ Go
 -- Subject > Weather Observation Station 5
 -- Solution 
 
-select distinct top 1(city), len(city) from station
-where len(city) = 3
-select distinct(city), len(city) from station
-where len(city) = 21
+declare @minlen int = (select top 1 len(s.city) from station s order by len(s.city))
+declare @maxlen int = (select top 1 len(s.city) from station s order by len(s.city) desc)
+declare @id1 int = (select top 1 ss.id from station ss where len(ss.city) = @minlen order by ss.city) 
+declare @id2 int = (select top 1 ss.id from station ss where len(ss.city) = @maxlen order by ss.city) 
+select s.city, len(s.city) from station s where s.ID in 
+(
+    @id1,@id2
+)
 
 Go 
 
