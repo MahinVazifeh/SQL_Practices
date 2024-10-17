@@ -61,4 +61,45 @@ Left join company as com on emp.company_code = com.company_code
 GROUP BY emp.company_code, com.founder
 
 
+-- Problem > https://www.hackerrank.com/challenges/revising-the-select-query-2/problem
+-- Difficulty > Easy
+-- Subject > Revising the Select Query II
+-- Solution 
+
+select name from city where population > 120000 and countrycode = 'USA'
+
+
+
+-- Problem > https://www.hackerrank.com/challenges/select-all-sql/problem
+-- Difficulty > Easy
+-- Subject > Select All
+-- Solution 
+
+select * from city
+
+-- Problem > https://www.hackerrank.com/challenges/select-by-id/problem
+-- Difficulty > Easy
+-- Subject > Select By ID
+-- Solution 
+
+select * from city where ID = 1661
+
+-- Problem > https://www.hackerrank.com/challenges/japanese-cities-attributes/problem
+-- Difficulty > Easy
+-- Subject > Japanese Cities' Attributes
+-- Solution 
+
+
+select * from city where countrycode = 'JPN'
+
+
+
+-- Problem > https://www.hackerrank.com/challenges/japanese-cities-attributes/problem
+-- Difficulty > Easy
+-- Subject > Japanese Cities' Names
+-- Solution 
+
+
+select name from city where countrycode = 'JPN'
+
 
