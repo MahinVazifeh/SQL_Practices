@@ -109,10 +109,7 @@ select city,state from Station
 -- Difficulty > Easy
 -- Subject > Weather Observation Station 4
 -- Solution 
-declare @count_city int = (select count(city) from station)
-declare @unique_city int = (select count(distinct city) from station)
-declare @result int = @count_city - @unique_city
-select @result as difference
+select count(city) - count(distinct city) from station
 
 
 -- Problem > https://www.hackerrank.com/challenges/weather-observation-station-6/problem
