@@ -155,4 +155,106 @@ select distinct city from station where city not like '[AEIOU]%[AEIOU]'
 
 
 
+-- Problem > https://www.hackerrank.com/challenges/weather-observation-station-12/problem
+-- Difficulty > Easy
+-- Subject > Weather Observation Station 12
+-- Solution
+SELECT DISTINCT CITY
+FROM STATION
+WHERE LOWER(LEFT(CITY, 1)) NOT IN ('a', 'e', 'i', 'o', 'u')
+AND LOWER(RIGHT(CITY, 1)) NOT IN ('a', 'e', 'i', 'o', 'u');
+
+
+-- Problem > https://www.hackerrank.com/challenges/more-than-75-marks/problem
+-- Difficulty > Easy
+-- Subject > Higher Than 75 Marks
+-- Solution
+select Name from Students where Marks > 75 order by RIGHT(Name, 3),ID
+
+
+-- Problem > https://www.hackerrank.com/challenges/name-of-employees/problem
+-- Difficulty > Easy
+-- Subject > Employee Names
+-- Solution
+select name from Employee order by name asc
+
+
+-- Problem > https://www.hackerrank.com/challenges/salary-of-employees/problem
+-- Difficulty > Easy
+-- Subject > Employee Salaries
+-- Solution
+select name from employee where salary > 2000 and months < 10 order by employee_id asc
+
+
+
+-- Problem > https://www.hackerrank.com/challenges/what-type-of-triangle/problem
+-- Difficulty > Advanced
+-- Subject > Type of Triangle
+-- Solution
+SELECT 
+  CASE 
+    WHEN A + B > C AND A + C > B AND B + C > A THEN
+      CASE 
+        WHEN A = B AND B = C THEN 'Equilateral'
+        WHEN A = B OR A = C OR B = C THEN 'Isosceles'
+        ELSE 'Scalene'
+      END
+    ELSE 'Not A Triangle'
+  END AS TriangleType
+FROM TRIANGLES;
+
+
+
+
+-- Problem > https://www.hackerrank.com/challenges/the-pads/problem
+-- Difficulty > Advanced
+-- Subject > The PADS
+-- Solution
+SELECT 
+    name, 
+    '(' + LEFT(occupation, 1) + ')' AS occupation_initial 
+FROM OCCUPATIONS 
+ORDER BY name ASC;
+
+
+DECLARE @occupation_count INT;
+SET @occupation_count = (SELECT COUNT(DISTINCT occupation) FROM OCCUPATIONS);
+
+
+DECLARE occupation_cursor CURSOR FOR
+SELECT DISTINCT occupation FROM OCCUPATIONS;
+
+DECLARE @current_occupation VARCHAR(50);
+DECLARE @occupation_count_i INT;
+
+
+OPEN occupation_cursor;
+
+FETCH NEXT FROM occupation_cursor INTO @current_occupation;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    
+    SET @occupation_count_i = (SELECT COUNT(*) FROM OCCUPATIONS WHERE occupation = @current_occupation);
+    
+    
+    PRINT 'There are a total of ' + CAST(@occupation_count_i AS VARCHAR) + ' ' + @current_occupation + 's.';
+    
+    
+    FETCH NEXT FROM occupation_cursor INTO @current_occupation;
+END;
+
+
+CLOSE occupation_cursor;
+DEALLOCATE occupation_cursor;
+
+
+
+
+
+
+
+
+
+
 
