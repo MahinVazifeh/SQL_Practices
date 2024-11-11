@@ -210,43 +210,27 @@ FROM TRIANGLES;
 -- Difficulty > Advanced
 -- Subject > The PADS
 -- Solution
-SELECT 
-    name, 
-    '(' + LEFT(occupation, 1) + ')' AS occupation_initial 
-FROM OCCUPATIONS 
-ORDER BY name ASC;
+declare @temp table (oo nvarchar(500) , id int)
+insert into @temp
+select o.Name + ' (' + LEFT(o.occupation, 1) + ')' , 0 from Occupation o order by o.Name
 
+--=======================================
+declare @Count_occupation nvarchar(10)
+declare @CountO int
 
-DECLARE @occupation_count INT;
-SET @occupation_count = (SELECT COUNT(DISTINCT occupation) FROM OCCUPATIONS);
-
-
-DECLARE occupation_cursor CURSOR FOR
-SELECT DISTINCT occupation FROM OCCUPATIONS;
-
-DECLARE @current_occupation VARCHAR(50);
-DECLARE @occupation_count_i INT;
-
-
-OPEN occupation_cursor;
-
-FETCH NEXT FROM occupation_cursor INTO @current_occupation;
-
-WHILE @@FETCH_STATUS = 0
-BEGIN
-    
-    SET @occupation_count_i = (SELECT COUNT(*) FROM OCCUPATIONS WHERE occupation = @current_occupation);
-    
-    
-    PRINT 'There are a total of ' + CAST(@occupation_count_i AS VARCHAR) + ' ' + @current_occupation + 's.';
-    
-    
-    FETCH NEXT FROM occupation_cursor INTO @current_occupation;
-END;
-
-
-CLOSE occupation_cursor;
-DEALLOCATE occupation_cursor;
+declare  CrTemp cursor for select distinct Lower(o.Occupation),count(Lower(o.Occupation)) from occupation o 
+group by Lower(o.Occupation)
+order by count(Lower(o.Occupation))
+open CrTemp
+fetch next from CrTemp into @Count_occupation,@CountO
+while @@fetch_status=0
+begin
+insert into @temp
+values('There are a total of ' + cast(@CountO as nvarchar(10)) + ' ' + @Count_occupation + 's.' , 1)
+fetch next from CrTemp into @Count_occupation,@CountO
+end
+deallocate CrTemp
+select oo from @temp order by id,oo
 
 
 
